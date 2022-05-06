@@ -1708,6 +1708,7 @@ class SamedayCourier extends CarrierModule
     public function hookActionValidateOrder($params)
     {
         $lockerId = (int) isset($_COOKIE['samedaycourier_locker_id']) ? $_COOKIE['samedaycourier_locker_id'] : 0;
+        if($lockerId==0 && $service['code'] === self::LOCKER_NEXT_DAY) $lockerId=Tools::getValue('samedaycourier_locker_id');
         $service = SamedayService::findByCarrierId($params['cart']->id_carrier);
 
         if ($lockerId > 0 && $service['code'] === self::LOCKER_NEXT_DAY) {
